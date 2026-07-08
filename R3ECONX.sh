@@ -15,7 +15,7 @@ echo '
 
 echo "==============================================================="
 echo "        ReconX - Ethical Reconnaissance Framework"
-echo "                Developed by Ghost"
+echo "                Developed by HARIHARAN"
 echo "==============================================================="
 echo
 
