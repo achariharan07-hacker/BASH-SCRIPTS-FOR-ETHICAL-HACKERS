@@ -1,4 +1,23 @@
-#!/bin/bash 
+#!/bin/bash
+
+clear
+
+echo '
+██████╗ ███████╗ ██████╗ ██████╗ ███╗   ██╗██╗  ██╗
+██╔══██╗██╔════╝██╔════╝██╔═══██╗████╗  ██║╚██╗██╔╝
+██████╔╝█████╗  ██║     ██║   ██║██╔██╗ ██║ ╚███╔╝
+██╔══██╗██╔══╝  ██║     ██║   ██║██║╚██╗██║ ██╔██╗
+██║  ██║███████╗╚██████╗╚██████╔╝██║ ╚████║██╔╝ ██╗
+╚═╝  ╚═╝╚══════╝ ╚═════╝ ╚═════╝ ╚═╝  ╚═══╝╚═╝  ╚═╝
+
+      [ RECON • ENUMERATION • DISCOVERY • AUTOMATION ]
+'
+
+echo "==============================================================="
+echo "        ReconX - Ethical Reconnaissance Framework"
+echo "                Developed by Ghost"
+echo "==============================================================="
+echo
 
 if [ $# -ne 1 ]; then
     echo "Usage: $0 <domain>"
@@ -11,6 +30,7 @@ OUTPUT="recon_$TARGET"
 mkdir -p "$OUTPUT"
 
 echo "[+] Target: $TARGET"
+echo
 
 echo "[+] Running whois..."
 whois "$TARGET" > "$OUTPUT/whois.txt"
@@ -48,23 +68,26 @@ else
 fi
 
 cat "$OUTPUT"/subfinder.txt "$OUTPUT"/assetfinder.txt 2>/dev/null | \
-sort -u > "$OUTPUT/subdomains.txt"
+grep -v "^\[!\]" | sort -u > "$OUTPUT/subdomains.txt"
 
 echo "[+] Found $(wc -l < "$OUTPUT/subdomains.txt") unique subdomains."
 
 echo "[+] Creating summary..."
 
 {
-echo "Target: $TARGET"
-echo "Date: $(date)"
+echo "======================================="
+echo " ReconX Reconnaissance Summary"
+echo "======================================="
+echo "Target              : $TARGET"
+echo "Date                : $(date)"
+echo "Subdomains Found    : $(wc -l < "$OUTPUT/subdomains.txt")"
 echo
-echo "Files Generated:"
+echo "Generated Files:"
 ls "$OUTPUT"
-echo
-echo "Subdomains Found: $(wc -l < "$OUTPUT/subdomains.txt")"
 } > "$OUTPUT/summary.txt"
 
 echo
-echo "[✓] Recon complete."
+echo "==============================================="
+echo "[✓] Reconnaissance Completed Successfully!"
 echo "[✓] Results saved in: $OUTPUT"
-
+echo "==============================================="
